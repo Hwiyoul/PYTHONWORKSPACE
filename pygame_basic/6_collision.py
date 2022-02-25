@@ -10,6 +10,10 @@ screen = pygame.display.set_mode((screen_width, screen_height))  # use tuple
 # screen title
 pygame.display.set_caption("Nado Gmae")
 
+# FPS
+clock = pygame.time.Clock()
+
+
 # upload background image to game screen
 background = pygame.image.load("/Users/Hwiyoul/PycharmProjects/PYTHONWORKSPACE/pygame_basic/background.jpg")
 
@@ -25,23 +29,35 @@ character_y_pos = screen_height - character_height
 to_x = 0
 to_y = 0
 
+# moving speed
+character_speed = 0.6
+
+# enemy
+enemy = pygame.image.load("/Users/Hwiyoul/PycharmProjects/PYTHONWORKSPACE/pygame_basic/enemy.jpg")
+enemy_size = enemy.get_rect().size  # find size of character image
+enemy_width = enemy_size[0]  # horizontal size of character
+enemy_height = enemy_size[1]  # vertical size of character
+enemy_x_pos = (screen_width/2) - (enemy_width/2)
+enemy_y_pos = (screen_height/2) - (enemy_height/2)
+
 # event loop
 # evnet loop : monitor what users are done such as keyboard typing, mouse moving to avoid game quit
 running = True  # is game running?
 while running:
+    dt = clock.tick(60)  # numbers of screen frame of game
     for event in pygame.event.get():  # this phrase must be written to use pygame package : what kind of events are occured?
         if event.type == pygame.QUIT:  # user quit game : the event of game screen is closed?
             running = False  # game is finished
 
         if event.type == pygame.KEYDOWN:  # push direction key
             if event.key == pygame.K_LEFT:  # move character to left side
-                to_x -= 5
+                to_x -= character_speed
             elif event.key == pygame.K_RIGHT:  # move character to right side
-                to_x += 5
+                to_x += character_speed
             elif event.key == pygame.K_UP:  # move character to up side
-                to_y -= 5
+                to_y -= character_speed
             elif event.key == pygame.K_DOWN:  # move character to down side
-                to_y += 5
+                to_y += character_speed
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
@@ -49,8 +65,8 @@ while running:
             elif event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                 to_y = 0
 
-    character_x_pos += to_x
-    character_y_pos += to_y
+    character_x_pos += to_x*dt
+    character_y_pos += to_y*dt
 
     # horizontal boundary limit
     if character_x_pos < 0:
@@ -64,12 +80,26 @@ while running:
     elif character_y_pos > screen_height - character_height:
         character_y_pos = screen_height - character_height
 
+    # dealing with collision
+    character_rect = character.get.rect()
+    character_rect.left = character_x_pos
+    character_rect.top = character_y_pos
+
+    enemy_rect = enemy.get.rect()
+    enemy_rect.left = enemy_x_pos
+    enemy_rect.top = enemy_y_pos
+
+    if character_rect.colliderect(enemy_rect)
+
+
+
+
 
     # screen.fill((34, 154, 21)) # fill screen with color RGB values of tuple
 
     screen.blit(background, (0, 0))  # write background image
-
-    screen.blit(character, (character_x_pos, character_y_pos))
+    screen.blit(character, (character_x_pos, character_y_pos))  # draw main character
+    screen.blit(enemy, (enemy_x_pos, enemy_y_pos))  # draw enemy
 
     pygame.display.update()  # update screen per every frame to show <- must be written
 

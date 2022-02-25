@@ -17,7 +17,7 @@ background = pygame.image.load("/Users/Hwiyoul/PycharmProjects/PYTHONWORKSPACE/p
 character = pygame.image.load("/Users/Hwiyoul/PycharmProjects/PYTHONWORKSPACE/pygame_basic/video.png")
 character_size = character.get_rect().size  # find size of character image
 character_width = character_size[0]  # horizontal size of character
-character_height = character_size[1]  # vertial size of character
+character_height = character_size[1]  # vertical size of character
 character_x_pos = (screen_width/2) - (character_width/2)
 character_y_pos = screen_height - character_height
 
